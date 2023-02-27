@@ -1,0 +1,7 @@
+C:\Users\criazo\source\repos\FirstProject\bin\Debug\FirstProject.exe.config
+C:\Users\criazo\source\repos\FirstProject\bin\Debug\FirstProject.exe
+C:\Users\criazo\source\repos\FirstProject\bin\Debug\FirstProject.pdb
+C:\Users\criazo\source\repos\FirstProject\obj\Debug\FirstProject.csproj.AssemblyReference.cache
+C:\Users\criazo\source\repos\FirstProject\obj\Debug\FirstProject.csproj.CoreCompileInputs.cache
+C:\Users\criazo\source\repos\FirstProject\obj\Debug\FirstProject.exe
+C:\Users\criazo\source\repos\FirstProject\obj\Debug\FirstProject.pdb
