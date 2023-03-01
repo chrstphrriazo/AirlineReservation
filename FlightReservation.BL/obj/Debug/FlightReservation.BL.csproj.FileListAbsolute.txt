@@ -1,0 +1,2 @@
+C:\Users\criazo\source\repos\FlightReservation.BL\obj\Debug\FlightReservation.BL.csproj.AssemblyReference.cache
+C:\Users\criazo\source\repos\FlightReservation.BL\obj\Debug\FlightReservation.BL.csproj.CoreCompileInputs.cache
