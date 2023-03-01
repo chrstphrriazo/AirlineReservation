@@ -1,4 +1,4 @@
-﻿using FlightReservation.BL.Validations;
+﻿using FlightReservation.BL.Validations.FlightMaintenance;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FlightReservation.BL.Test.Validations

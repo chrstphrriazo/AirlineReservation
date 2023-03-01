@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FlightReservation.DL
 {
-    public class PassengersRepository
+    public class PassengersRepository : IDataRepository
     {
         public void WriteData(string writeData)
         {
@@ -36,7 +32,6 @@ namespace FlightReservation.DL
                 flightData.Add(rowData);
             }
 
-            Console.ReadLine();
             streamReader.Close();
             fileStreamRead.Close();
 

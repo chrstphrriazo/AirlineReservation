@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FlightReservation.DL
 {
-    class ReservationsRepository
+    public class ReservationsRepository : IDataRepository
     {
         public void WriteData(string writeData)
         {
@@ -36,7 +36,6 @@ namespace FlightReservation.DL
                 flightData.Add(rowData);
             }
 
-            Console.ReadLine();
             streamReader.Close();
             fileStreamRead.Close();
 
