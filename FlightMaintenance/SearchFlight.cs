@@ -1,7 +1,11 @@
-﻿using System;
+﻿using FlightReservation.BL.Entities;
+using FlightReservation.BL.Validations;
+using FlightReservation.DL;
+using System;
 using System.Collections.Generic;
+using static FlightReservation.BL.Validations.FlightQuery;
 
-namespace FirstProject.FlightMaintenance
+namespace FlightReservation.UI.FlightMaintenance
 {
     class SearchFlight
     {
@@ -19,17 +23,17 @@ namespace FirstProject.FlightMaintenance
             {
                 case "1":
                     Console.Clear();
-                    SearchByFlightNumber();
+                    SearchFlights(FlightSearch.FlightNumber);
                     SearchFlightMenu();
                     break;
                 case "2":
                     Console.Clear();
-                    SearchByAirlineCode();
+                    SearchFlights(FlightSearch.AirlineCode);
                     SearchFlightMenu();
                     break;
                 case "3":
                     Console.Clear();
-                    SearchByOriginAndDestination();
+                    SearchByOriginAndDestination(FlightSearch.Destinations);
                     SearchFlightMenu();
                     break;
                 case "4":
@@ -44,29 +48,35 @@ namespace FirstProject.FlightMaintenance
             }
         }
 
-        public void SearchByFlightNumber()
+        public void SearchFlights(FlightSearch flightSearch)
         {
-            ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
-            Console.Write("Enter Flight Number : ");
-            string flightNumber = Console.ReadLine();
 
-            if (!validateFlightDetails.ValidateFlightNumber(flightNumber))
+            string searchFlight;
+
+            if(FlightSearch.AirlineCode == flightSearch)
             {
-                return;
+                searchFlight = SearchByAirlineCode();
+            }
+            else
+            {
+                searchFlight = SearchByFlightNumber();
             }
 
-            ValidateFlightData validateFlightData = new ValidateFlightData();
+            FlightsRepository flightsRepository = new FlightsRepository();
+            FlightQuery flightQuery = new FlightQuery(flightsRepository);
 
-            List<Flights> flights = new List<Flights>();
+            List<Flights> flights = flightQuery.SearchFlight(searchFlight, flightSearch);
 
-            flights = validateFlightData.SearchFlight(flightNumber, ValidateFlightData.FlightSearch.FlightNumber);
-
-            if(flights.Count < 1)
+            if (flights.Count < 1 && flightSearch == FlightSearch.AirlineCode)
             {
-                Console.WriteLine($"There are no flights with Flight Number - {flightNumber}.");
+                Console.WriteLine($"There are no flights with Airline Code - {searchFlight}.");
+            }
+            else if (flights.Count < 1 && flightSearch == FlightSearch.FlightNumber)
+            {
+                Console.WriteLine($"There are no flights with Flight Number - {searchFlight}.");
             }
 
-            for(int i = 0; i < flights.Count; i++)
+            for (int i = 0; i < flights.Count; i++)
             {
                 Console.WriteLine($"{flights[i].AirlineCode}-{flights[i].FlightNumber}-{flights[i].ArrivalStation}-{flights[i].DepartureStation}-{flights[i].STA}-{flights[i].STD}");
             }
@@ -75,26 +85,35 @@ namespace FirstProject.FlightMaintenance
             Console.Clear();
         }
 
-        public void SearchByAirlineCode()
+        public void SearchByOriginAndDestination(FlightSearch flightSearch)
         {
-            ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
-            Console.Write("Enter Airline Code : ");
-            string airlineCode = Console.ReadLine();
 
-            if (!validateFlightDetails.ValidateAirlineCode(airlineCode))
+            //string[] searchFlight = new string[2];
+
+            string origin = "", destination = "", airlineCode, flightNumber;
+
+            if(FlightSearch.Destinations == flightSearch)
             {
-                return;
+                string[] searchFlight = SearchByDestination();
+                origin = searchFlight[0];
+                destination = searchFlight[1];
+            }
+            else
+            {
+                airlineCode = "";
+                flightNumber = "";
+                Console.WriteLine($"{airlineCode}-{flightNumber}");
+                //
             }
 
-            ValidateFlightData validateFlightData = new ValidateFlightData();
+            FlightsRepository flightsRepository = new FlightsRepository();
+            FlightQuery flightQuery = new FlightQuery(flightsRepository);
 
-            List<Flights> flights = new List<Flights>();
+            List<Flights> flights = flightQuery.SearchFlight(field1: origin, field2: destination, FlightSearch.Destinations);
 
-            flights = validateFlightData.SearchFlight(airlineCode, ValidateFlightData.FlightSearch.AirlineCode);
-
-            if (flights.Count < 1)
+            if (flights.Count < 1 && flightSearch == FlightSearch.Destinations)
             {
-                Console.WriteLine($"There are no flights with Airline Code - {airlineCode}.");
+                Console.WriteLine($"There are no flights with Flight Number - {origin}-{destination}.");
             }
 
             for (int i = 0; i < flights.Count; i++)
@@ -106,43 +125,78 @@ namespace FirstProject.FlightMaintenance
             Console.Clear();
         }
 
-        public void SearchByOriginAndDestination()
+        public string SearchByAirlineCode()
         {
             ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
+
+            Console.Write("Enter Airline Code : ");
+            string airlineCode = Console.ReadLine();
+
+            if (!validateFlightDetails.ValidateAirlineCode(airlineCode))
+            {
+                Console.WriteLine("Invalid Flight Number");
+                Console.Write("Press Any Key to Continue...");
+                Console.ReadLine();
+                Console.Clear();
+                SearchFlightMenu();
+            }
+
+            return airlineCode;
+        }
+
+        public string SearchByFlightNumber()
+        {
+            ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
+
+            Console.Write("Enter Flight Number : ");
+            string flightNumber = Console.ReadLine();
+
+            if (!validateFlightDetails.ValidateFlightNumber(flightNumber))
+            {
+                Console.WriteLine("Invalid Flight Number");
+                Console.Write("Press Any Key to Continue...");
+                Console.ReadLine();
+                Console.Clear();
+                SearchFlightMenu();
+            }
+
+            return flightNumber;
+        }
+
+        public string[] SearchByDestination()
+        {
+            ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
+
+            string[] returnData = new string[2];
+
             Console.Write("Enter Origin Station : ");
             string originStation = Console.ReadLine();
 
-            if (!validateFlightDetails.ValidateDepartureStation(originStation))
+            if (!validateFlightDetails.ValidateStation(originStation))
             {
-                return;
+                Console.WriteLine("Invalid Arrival Station Code");
+                Console.Write("Press Any Key to Continue...");
+                Console.ReadLine();
+                Console.Clear();
+                SearchFlightMenu();
             }
 
             Console.WriteLine("Enter Destination Station : ");
             string destinationStation = Console.ReadLine();
 
-            if (!validateFlightDetails.ValidateDepartureStation(destinationStation))
+            if (!validateFlightDetails.ValidateStation(destinationStation))
             {
-                return;
+                Console.WriteLine("Invalid Arrival Station Code");
+                Console.Write("Press Any Key to Continue...");
+                Console.ReadLine();
+                Console.Clear();
+                SearchFlightMenu();
             }
 
-            ValidateFlightData validateFlightData = new ValidateFlightData();
+            returnData[0] = originStation;
+            returnData[1] = destinationStation;
 
-            List<Flights> flights = new List<Flights>();
-
-            flights = validateFlightData.SearchFlight(originStation, destinationStation);
-
-            if (flights.Count < 1)
-            {
-                Console.WriteLine($"There are no flights with Flight Number - {originStation}-{destinationStation}.");
-            }
-
-            for (int i = 0; i < flights.Count; i++)
-            {
-                Console.WriteLine($"{flights[i].AirlineCode}-{flights[i].FlightNumber}-{flights[i].AirlineCode}-{flights[i].ArrivalStation}-{flights[i].DepartureStation}-{flights[i].STA}-{flights[i].STD}");
-            }
-
-            Console.ReadLine();
-            Console.Clear();
+            return returnData;
         }
     }
 }

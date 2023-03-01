@@ -1,6 +1,8 @@
-﻿using System;
+﻿using FlightReservation.BL.Validations;
+using FlightReservation.DL;
+using System;
 
-namespace FirstProject.FlightMaintenance
+namespace FlightReservation.UI.FlightMaintenance
 {
     public class CreateFlight
     {
@@ -15,6 +17,10 @@ namespace FirstProject.FlightMaintenance
 
             if (!validateFlightDetails.ValidateAirlineCode(airlineCode))
             {
+                Console.WriteLine("Invalid Airline Code");
+                Console.Write("Press Any Key to Continue...");
+                Console.ReadLine();
+                Console.Clear();
                 return;
             }
 
@@ -23,38 +29,56 @@ namespace FirstProject.FlightMaintenance
 
             if (!validateFlightDetails.ValidateFlightNumber(flightNumber))
             {
+                Console.WriteLine("Invalid Flight Number");
+                Console.Write("Press Any Key to Continue...");
+                Console.ReadLine();
+                Console.Clear();
                 return;
             }
 
             Console.Write("Enter an Arrival Station : ");
             string arrivalStation = Console.ReadLine();
 
-            if (!validateFlightDetails.ValidateArrivalStation(arrivalStation))
+            if (!validateFlightDetails.ValidateStation(arrivalStation))
             {
+                Console.WriteLine("Invalid Arrival Station Code");
+                Console.Write("Press Any Key to Continue...");
+                Console.ReadLine();
+                Console.Clear();
                 return;
             }
 
             Console.Write("Enter a Departure Station : ");
             string departureStation = Console.ReadLine();
 
-            if (!validateFlightDetails.ValidateDepartureStation(departureStation))
+            if (!validateFlightDetails.ValidateStation(departureStation))
             {
+                Console.WriteLine("Invalid Departure Station Code");
+                Console.Write("Press Any Key to Continue...");
+                Console.ReadLine();
+                Console.Clear();
                 return;
             }
 
             Console.Write("Enter a Scheduled Time of Arrival (00:00 - 23:59) : ");
             string STA = Console.ReadLine();
 
-            if (!validateFlightDetails.ValidateDate(STA))
+            if (!validateFlightDetails.ValidateTime(STA))
             {
+                Console.WriteLine("Invalid Time Input.");
+                Console.ReadLine();
+                Console.Clear();
                 return;
             }
 
             Console.Write("Enter a Scheduled Time of Departure (00:00 - 23:59) : ");
             string STD = Console.ReadLine();
 
-            if (!validateFlightDetails.ValidateDate(STD))
+            if (!validateFlightDetails.ValidateTime(STD))
             {
+                Console.WriteLine("Invalid Time Input.");
+                Console.ReadLine();
+                Console.Clear();
                 return;
             }
 
@@ -62,11 +86,11 @@ namespace FirstProject.FlightMaintenance
 
             //Compare flightInformation to all flights
 
-            ValidateFlightData validateFlightData = new ValidateFlightData();
+            FlightsRepository validateFlightData = new FlightsRepository();
+            FlightQuery flightQuery = new FlightQuery(validateFlightData);
 
-            if (!validateFlightData.ReadData(flightInformation))
+            if (!flightQuery.CreateFlight(flightInformation))
             {
-                validateFlightData.WriteData(flightInformation);
                 Console.WriteLine($"Flight {flightInformation} is created!");
             }
             else

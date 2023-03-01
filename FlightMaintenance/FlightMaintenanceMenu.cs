@@ -1,7 +1,6 @@
-﻿using FirstProject.FlightMaintenance;
-using System;
+﻿using System;
 
-namespace FirstProject
+namespace FlightReservation.UI.FlightMaintenance
 {
     public class FlightMaintenanceMenu
     {

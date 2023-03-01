@@ -1,6 +1,8 @@
-﻿using System;
+﻿using FirstProject.Reservation;
+using FlightReservation.UI.FlightMaintenance;
+using System;
 
-namespace FirstProject
+namespace FlightReservation.UI
 {
     public class Program
     {
@@ -33,6 +35,8 @@ namespace FirstProject
 
                 case "2":
                     Console.WriteLine("RS");
+                    ReservationMenu reservationMenu = new ReservationMenu();
+                    reservationMenu.Reservation();
                     Console.Clear();
                     Menu();
                     break;
