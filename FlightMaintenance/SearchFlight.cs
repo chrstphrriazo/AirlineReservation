@@ -1,9 +1,9 @@
 ﻿using FlightReservation.BL.Entities;
-using FlightReservation.BL.Validations;
+using FlightReservation.BL.Validations.FlightMaintenance;
 using FlightReservation.DL;
 using System;
 using System.Collections.Generic;
-using static FlightReservation.BL.Validations.FlightQuery;
+using static FlightReservation.BL.Validations.FlightMaintenance.FlightQuery;
 
 namespace FlightReservation.UI.FlightMaintenance
 {
