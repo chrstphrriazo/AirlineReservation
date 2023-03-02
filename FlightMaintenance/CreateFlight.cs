@@ -12,7 +12,7 @@ namespace FlightReservation.UI.FlightMaintenance
             ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
             Console.WriteLine("FLIGHT MAINTENANCE - CREATE FLIGHT\n");
 
-            Console.Write("Enter an Airline Code :");
+            Console.Write("Enter an Airline Code : ");
             string airlineCode = Console.ReadLine();
 
             if (!validateFlightDetails.ValidateAirlineCode(airlineCode))

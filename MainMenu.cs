@@ -27,9 +27,9 @@ namespace FirstProject
                     break;
 
                 case "2":
+                    Console.Clear();
                     ReservationMenu reservationMenu = new ReservationMenu();
                     reservationMenu.Reservation();
-                    Console.Clear();
                     Menu();
                     break;
                 case "3":

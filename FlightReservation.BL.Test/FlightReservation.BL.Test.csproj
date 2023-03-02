@@ -66,6 +66,8 @@
     <Compile Include="Validations\FlightMaintenance\ValidateFlightDetailsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validations\Passenger\ValidatePassengerDetailsTest.cs" />
+    <Compile Include="Validations\Reservation\ReservationQueryTest.cs" />
+    <Compile Include="Validations\Reservation\ValidateReservationDetailsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -80,9 +82,7 @@
       <Name>FlightReservation.DL</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Validations\Reservation\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

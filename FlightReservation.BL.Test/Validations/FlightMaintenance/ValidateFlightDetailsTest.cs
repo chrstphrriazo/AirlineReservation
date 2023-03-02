@@ -20,6 +20,8 @@ namespace FlightReservation.BL.Test.Validations
             validateFlightDetails = null;
         }
 
+        //UNIT TEST A
+
         [TestMethod]
         public void ValidateAirlineCode_InputIsBlank_ReturnsFalse()
         {
@@ -66,7 +68,7 @@ namespace FlightReservation.BL.Test.Validations
             Assert.AreEqual(expected, actual);
         }
 
-        /*[TestMethod]
+        [TestMethod]
         public void ValidateAirlineCode_InputNumericValueIsNotInFirstCharacter_ReturnsFalse()
         {
             //Arrange
@@ -79,7 +81,7 @@ namespace FlightReservation.BL.Test.Validations
 
             //Assert
             Assert.AreEqual(expected, actual);
-        }*/
+        }
 
         [TestMethod]
         public void ValidateAirlineCode_NonAlphanumericInput_ReturnsFalse()
@@ -99,8 +101,8 @@ namespace FlightReservation.BL.Test.Validations
         public void ValidateAirlineCode_HappyPath_ReturnsTrue()
         {
             //Arrange
-            string input = "9999";
-            bool expected = false;
+            string input = "1PR";
+            bool expected = true;
 
             //Act
             bool actual = validateFlightDetails.ValidateAirlineCode(input);
@@ -109,6 +111,7 @@ namespace FlightReservation.BL.Test.Validations
             Assert.AreEqual(expected, actual);
         }
 
+        //UNIT TEST B
         // Validate Flight Number
 
         [TestMethod]
@@ -185,6 +188,8 @@ namespace FlightReservation.BL.Test.Validations
             Assert.AreEqual(expected2, actual2);
         }
 
+        //UNIT TEST C
+
         // Validate Stations
 
         [TestMethod]
@@ -247,6 +252,7 @@ namespace FlightReservation.BL.Test.Validations
             Assert.AreEqual(expected, actual);
         }
 
+        //UNIT TEST D
         //Validate Scheduled Time
 
         [TestMethod]
