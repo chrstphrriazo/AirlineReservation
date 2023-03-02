@@ -9,13 +9,11 @@ namespace FlightReservation.BL.Test.Validations.Passenger
     public class ValidatePassengerDetailsTest
     {
         private ValidatePassengerDetails validatePassengerDetails;
-        private ValidateReservationDetails validateReservationDetails;
 
         [TestInitialize]
         public void Setup()
         {
             validatePassengerDetails = new ValidatePassengerDetails();
-            validateReservationDetails = new ValidateReservationDetails();
         }
 
         [TestCleanup]
@@ -24,6 +22,7 @@ namespace FlightReservation.BL.Test.Validations.Passenger
             validatePassengerDetails = null;
         }
 
+        //UNIT TEST F i - iii
         [TestMethod]
         public void ValidateName_FirstNameIsBlank_ReturnsFalse()
         {
@@ -109,7 +108,7 @@ namespace FlightReservation.BL.Test.Validations.Passenger
         }
 
         [TestMethod]
-        public void ValidateIfFutureDated_BirthDateInputIsToday_ReturnsFalse()
+        public void ValidateIfFutureDated_BirthDateInputIsToday_ReturnsTrue()
         {
             bool expected = true;
 
@@ -121,7 +120,7 @@ namespace FlightReservation.BL.Test.Validations.Passenger
         }
 
         [TestMethod]
-        public void ValidateIfFutureDated_BirthDateInputIsPastDated_ReturnsFalse()
+        public void ValidateIfFutureDated_BirthDateInputIsPastDated_ReturnsTrue()
         {
             bool expected = true;
 
@@ -164,54 +163,6 @@ namespace FlightReservation.BL.Test.Validations.Passenger
             string birthDate = "02/29/2000";
 
             string actual = validatePassengerDetails.CalculateAge(birthDate);
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod]
-        public void CheckPassengerCount_PassengerCountIsLessThanOne_ReturnsFalse()
-        {
-            string input = "0";
-
-            bool expected = false;
-
-            bool actual = validateReservationDetails.PassengerCount(input);
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod]
-        public void CheckPassengerCount_PassengerCountIsGreaterThanFive_ReturnsFalse()
-        {
-            string input = "6";
-
-            bool expected = false;
-
-            bool actual = validateReservationDetails.PassengerCount(input);
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod]
-        public void CheckPassengerCount_PassengerCountIsNotNumeric_ReturnsFalse()
-        {
-            string input = "ABC@!@";
-
-            bool expected = false;
-
-            bool actual = validateReservationDetails.PassengerCount(input);
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod]
-        public void CheckPassengerCount_PassengerCountHappyPath_ReturnsTrue()
-        {
-            string input = "5";
-
-            bool expected = true;
-
-            bool actual = validateReservationDetails.PassengerCount(input);
 
             Assert.AreEqual(expected, actual);
         }

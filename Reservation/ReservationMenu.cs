@@ -37,6 +37,11 @@ namespace FirstProject.Reservation
                     searchByPNR.SearchByPNRNumber();
                     Reservation();
                     return;
+                case "4":
+                    Console.Clear();
+                    MainMenu mainMenu = new MainMenu();
+                    mainMenu.Menu();
+                    break;
                 default:
                     Console.WriteLine("Invalid Option");
                     Console.ReadLine();

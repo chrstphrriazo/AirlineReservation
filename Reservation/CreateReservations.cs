@@ -16,7 +16,10 @@ namespace FirstProject.Reservation
         {
             InputFlightFields(out string airlineCode, out string flightNumber, out string arrivalStation, out string departureStation);
 
-            List<Flights> existingFlights = CheckExistingFlight(airlineCode, flightNumber, arrivalStation, departureStation);
+            ReservationsRepository reservationsRepository = new ReservationsRepository();
+            ReservationQuery reservationQuery = new ReservationQuery(reservationsRepository);
+
+            List<Flights> existingFlights = reservationQuery.CheckExistingFlight(airlineCode, flightNumber, arrivalStation, departureStation);
 
             if (existingFlights.Count < 1)
             {
@@ -50,8 +53,9 @@ namespace FirstProject.Reservation
                     $"-{existingFlights[i].STA}");
             }
 
-            Console.Write("\nChoose The Flight You Want To Reserve (Enter List Number) : \n");
+            Console.Write("\nChoose The Flight You Want To Reserve (Enter List Number) : ");
             string choice = Console.ReadLine();
+            Console.WriteLine();
 
             bool checkParse = int.TryParse(choice, out int listChoice);
 
@@ -79,10 +83,14 @@ namespace FirstProject.Reservation
 
             List<string> passengerList =  CreatePassenger(passengers);
 
-            GeneratePNRNumberDef(out string _pnrNumber);
-            Console.WriteLine($"PNR Number : {_pnrNumber}\n");
+            GeneratePNRNumber generatePNRNumber = new GeneratePNRNumber();
+            string pnrNumber = generatePNRNumber.GeneratePNR();
 
-            ReservationDetails(passengerList, reservationsData, _pnrNumber);
+            pnrNumber = reservationQuery.CheckDuplicatePNR(pnrNumber);
+            
+            Console.WriteLine($"PNR Number : {pnrNumber}\n");
+
+            ReservationDetails(passengerList, reservationsData, pnrNumber);
         }
 
         private void ReservationDetails(List<string> passengerDetails, string reservationDetails, string pnrNumber)
@@ -95,7 +103,7 @@ namespace FirstProject.Reservation
 
             Console.WriteLine($"\nRESERVATION SUCCESS! PNR Number {pnrNumber} Is Generated. Details below:\n");
 
-            reservationDetails = reservationDetails + $"-{pnrNumber}";
+            reservationDetails += $"-{pnrNumber}";
 
             Console.WriteLine($"Reserved to Flight : {reservationDetails}\n");
 
@@ -240,36 +248,6 @@ namespace FirstProject.Reservation
             Console.ReadLine();
         }
 
-        public void GeneratePNRNumberDef(out string pnrNumber)
-        {
-            GeneratePNRNumber generatePNRNumber = new GeneratePNRNumber();
-            ReservationsRepository reservationsRepository = new ReservationsRepository();
-            ReservationQuery reservationQuery = new ReservationQuery(reservationsRepository);
-            ValidateReservationDetails validateReservationDetails = new ValidateReservationDetails();
-
-            pnrNumber = generatePNRNumber.GeneratePNR();
-            if (!reservationQuery.CheckDuplicatePNR(pnrNumber))
-            {
-                GeneratePNRNumberDef(out pnrNumber);
-            }
-
-            if (!validateReservationDetails.ValidatePNRNumber(pnrNumber))
-            {
-                GeneratePNRNumberDef(out pnrNumber);
-            }
-
-            return;
-        }
-
-        public List<Flights> CheckExistingFlight(string airlineCode, string flightNumber, string arrivalStation, string departureStation)
-        {
-            FlightsRepository flightsRepository = new FlightsRepository();
-            FlightQuery flightQuery = new FlightQuery(flightsRepository);
-            List<Flights> flights = flightQuery.SearchFlight(field1: airlineCode, field2: flightNumber, field3: departureStation, field4: arrivalStation);
-
-            return flights;
-        }
-
         public void ReserveFlightOption()
         {
             ReservationMenu reservation = new ReservationMenu();
@@ -338,7 +316,7 @@ namespace FirstProject.Reservation
             ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
             ReservationMenu reservationMenu = new ReservationMenu();
             Console.WriteLine("ENTER FLIGHT DETAILS - RESERVATION\n");
-            Console.Write("Enter an Airline Code :");
+            Console.Write("Enter an Airline Code : ");
             airlineCode = Console.ReadLine();
 
             if (!validateFlightDetails.ValidateAirlineCode(airlineCode))
