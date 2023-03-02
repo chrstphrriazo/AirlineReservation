@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FirstProject;
+using System;
 
 namespace FlightReservation.UI.FlightMaintenance
 {
@@ -28,7 +29,9 @@ namespace FlightReservation.UI.FlightMaintenance
                     break;
                 case "3":
                     Console.Clear();
-                    return;
+                    MainMenu mainMenu = new MainMenu();
+                    mainMenu.Menu();
+                    break;
                 default:
                     Console.WriteLine("Invalid Option");
                     Console.ReadLine();

@@ -46,10 +46,13 @@
     <Compile Include="FlightMaintenance\CreateFlight.cs" />
     <Compile Include="FlightMaintenance\FlightMaintenanceMenu.cs" />
     <Compile Include="FlightMaintenance\SearchFlight.cs" />
+    <Compile Include="MainMenu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reservation\CreateReservations.cs" />
+    <Compile Include="Reservation\ListReservations.cs" />
     <Compile Include="Reservation\ReservationMenu.cs" />
+    <Compile Include="Reservation\SearchByPNR.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

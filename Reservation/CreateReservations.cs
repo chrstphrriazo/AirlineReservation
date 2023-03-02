@@ -1,8 +1,8 @@
-﻿using AirlineReservation.Logic;
-using AirlineReservation.Validations.Passenger;
-using AirlineReservation.Validations.Reservation;
+﻿using FlightReservation.BL.Logic;
+using FlightReservation.BL.Validations.Passenger;
 using FlightReservation.BL.Entities;
 using FlightReservation.BL.Validations.FlightMaintenance;
+using FlightReservation.BL.Validations.Reservation;
 using FlightReservation.DL;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace FirstProject.Reservation
 
             if (existingFlights.Count < 1)
             {
-                Console.WriteLine($"There Are No Available Flights with {airlineCode}-{flightNumber}-{arrivalStation}-{departureStation}\n");
+                Console.WriteLine($"There Are No Available Flights with {airlineCode}-{flightNumber}-{departureStation}-{arrivalStation}\n");
                 RetryReservation();
             }
 
@@ -30,10 +30,10 @@ namespace FirstProject.Reservation
             {
                 Console.WriteLine($"[{i + 1}] {existingFlights[i].AirlineCode}" +
                     $"-{existingFlights[i].FlightNumber}" +
-                    $"-{existingFlights[i].ArrivalStation}" +
                     $"-{existingFlights[i].DepartureStation}" +
-                    $"-{existingFlights[i].STA}" +
-                    $"-{existingFlights[i].STD}");
+                    $"-{existingFlights[i].ArrivalStation}" +
+                    $"-{existingFlights[i].STD}" +
+                    $"-{existingFlights[i].STA}");
             }
 
             ReserveFlightOption();
@@ -44,17 +44,16 @@ namespace FirstProject.Reservation
             {
                 Console.WriteLine($"[{i + 1}] {existingFlights[i].AirlineCode}" +
                     $"-{existingFlights[i].FlightNumber}" +
-                    $"-{existingFlights[i].ArrivalStation}" +
                     $"-{existingFlights[i].DepartureStation}" +
-                    $"-{existingFlights[i].STA}" +
-                    $"-{existingFlights[i].STD}");
+                    $"-{existingFlights[i].ArrivalStation}" +
+                    $"-{existingFlights[i].STD}" +
+                    $"-{existingFlights[i].STA}");
             }
 
-            Console.Write("\nChoose The Flight You Want To Reserve : (Enter List Number)");
+            Console.Write("\nChoose The Flight You Want To Reserve (Enter List Number) : \n");
             string choice = Console.ReadLine();
-            int listChoice;
 
-            bool checkParse = int.TryParse(choice, out listChoice);
+            bool checkParse = int.TryParse(choice, out int listChoice);
 
             if (!checkParse)
             {
@@ -74,16 +73,19 @@ namespace FirstProject.Reservation
                 reservationMenu.Reservation();
             }
 
-            InputReservationsField(out string flightDate, out string passengers, out string pnrNumber );
+            InputReservationsField(out string flightDate, out string passengers);
 
-            string reservationsData = $"{airlineCode}-{flightNumber}-{arrivalStation}-{departureStation}-{flightDate}-{pnrNumber}";
+            string reservationsData = $"{airlineCode}-{flightNumber}-{departureStation}-{arrivalStation}-{flightDate}";
 
-            List<string> passengerList =  CreatePassenger(passengers, pnrNumber);
+            List<string> passengerList =  CreatePassenger(passengers);
 
-            ReservationDetails(passengerList, reservationsData);
+            GeneratePNRNumberDef(out string _pnrNumber);
+            Console.WriteLine($"PNR Number : {_pnrNumber}\n");
+
+            ReservationDetails(passengerList, reservationsData, _pnrNumber);
         }
 
-        private void ReservationDetails(List<string> passengerDetails, string reservationDetails)
+        private void ReservationDetails(List<string> passengerDetails, string reservationDetails, string pnrNumber)
         {
             ReservationsRepository reservationsRepository = new ReservationsRepository();
             PassengersRepository passengersRepository = new PassengersRepository();
@@ -91,12 +93,15 @@ namespace FirstProject.Reservation
             ReservationQuery reservationQuery = new ReservationQuery(reservationsRepository);
             PassengerQuery passengerQuery = new PassengerQuery(passengersRepository);
 
-            Console.WriteLine("\nRESERVATION SUCCESS! Below are the details.\n");
+            Console.WriteLine($"\nRESERVATION SUCCESS! PNR Number {pnrNumber} Is Generated. Details below:\n");
+
+            reservationDetails = reservationDetails + $"-{pnrNumber}";
 
             Console.WriteLine($"Reserved to Flight : {reservationDetails}\n");
 
             for(int i = 0; i < passengerDetails.Count; i++)
             {
+                passengerDetails[i] = passengerDetails[i] + $"-{pnrNumber}";
                 string[] passengerData = passengerDetails[i].Split('-');
                 Console.WriteLine($"Passenger {i + 1}");
                 Console.WriteLine($"First Name : {passengerData[0]}");
@@ -116,7 +121,7 @@ namespace FirstProject.Reservation
             Console.Clear();
         }
 
-        private List<string> CreatePassenger(string passengerCount, string pnrNumber)
+        private List<string> CreatePassenger(string passengerCount)
         {
             ValidatePassengerDetails validatePassengerDetails  = new ValidatePassengerDetails();
             ReservationMenu reservationMenu = new ReservationMenu();
@@ -181,7 +186,7 @@ namespace FirstProject.Reservation
 
                 string passengerAge = validatePassengerDetails.CalculateAge(passengerBirthdate);
 
-                string passenger = $"{firstName}-{lastName}-{passengerBirthdate}-{passengerAge}-{pnrNumber}";
+                string passenger = $"{firstName}-{lastName}-{passengerBirthdate}-{passengerAge}";
                 Console.WriteLine(passenger);
 
                 Console.WriteLine();
@@ -192,7 +197,7 @@ namespace FirstProject.Reservation
             return passengersList;
         }
 
-        private void InputReservationsField(out string _flightDate, out string _passengers, out string _pnrNumber)
+        private void InputReservationsField(out string _flightDate, out string _passengers)
         {
             ValidateReservationDetails validateReservationDetails = new ValidateReservationDetails();
             ReservationMenu reservationMenu = new ReservationMenu();
@@ -222,18 +227,14 @@ namespace FirstProject.Reservation
             Console.Write("Enter Number of Passengers : ");
             _passengers = Console.ReadLine();
 
-            if (!validateReservationDetails.ValidateInteger(_passengers))
+            if (!validateReservationDetails.PassengerCount(_passengers))
             {
-                Console.WriteLine("Invalid Format");
+                Console.WriteLine("Invalid Passenger Count");
                 Console.Write("Press Any Key to Continue...");
                 Console.ReadLine();
                 Console.Clear();
                 reservationMenu.Reservation();
             }
-
-            GeneratePNRNumberDef(out _pnrNumber);
-
-            Console.WriteLine($"PNR Number : {_pnrNumber}\n");
 
             Console.Write("Press Any Key to continue...");
             Console.ReadLine();
@@ -244,12 +245,19 @@ namespace FirstProject.Reservation
             GeneratePNRNumber generatePNRNumber = new GeneratePNRNumber();
             ReservationsRepository reservationsRepository = new ReservationsRepository();
             ReservationQuery reservationQuery = new ReservationQuery(reservationsRepository);
+            ValidateReservationDetails validateReservationDetails = new ValidateReservationDetails();
 
             pnrNumber = generatePNRNumber.GeneratePNR();
             if (!reservationQuery.CheckDuplicatePNR(pnrNumber))
             {
                 GeneratePNRNumberDef(out pnrNumber);
             }
+
+            if (!validateReservationDetails.ValidatePNRNumber(pnrNumber))
+            {
+                GeneratePNRNumberDef(out pnrNumber);
+            }
+
             return;
         }
 
@@ -257,7 +265,7 @@ namespace FirstProject.Reservation
         {
             FlightsRepository flightsRepository = new FlightsRepository();
             FlightQuery flightQuery = new FlightQuery(flightsRepository);
-            List<Flights> flights = flightQuery.SearchFlight(field1: airlineCode, field2: flightNumber, field3: arrivalStation, field4: departureStation);
+            List<Flights> flights = flightQuery.SearchFlight(field1: airlineCode, field2: flightNumber, field3: departureStation, field4: arrivalStation);
 
             return flights;
         }

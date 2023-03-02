@@ -10,14 +10,12 @@ namespace FlightReservation.BL.Test.Validations
     public class FlightQueryTest
     {
         private FlightQuery flightQuery;
-        private FlightsRepository flightsRepository;
         private Mock<IDataRepository> dataRepository;
 
         [TestInitialize]
         public void Setup()
         {
             dataRepository = new Mock<IDataRepository>();
-            flightsRepository= new FlightsRepository();
 
             flightQuery = new FlightQuery(dataRepository.Object);
         }
