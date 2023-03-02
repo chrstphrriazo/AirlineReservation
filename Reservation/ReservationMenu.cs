@@ -27,10 +27,14 @@ namespace FirstProject.Reservation
                     break;
                 case "2":
                     Console.Clear();
+                    ListReservations listReservations = new ListReservations();
+                    listReservations.ListAllReservations();
                     Reservation();
                     break;
                 case "3":
                     Console.Clear();
+                    SearchByPNR searchByPNR = new SearchByPNR();
+                    searchByPNR.SearchByPNRNumber();
                     Reservation();
                     return;
                 default:

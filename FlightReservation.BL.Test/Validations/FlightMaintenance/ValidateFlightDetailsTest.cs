@@ -6,12 +6,25 @@ namespace FlightReservation.BL.Test.Validations
     [TestClass]
     public class ValidateFlightDetailsTest
     {
+        private ValidateFlightDetails validateFlightDetails;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            validateFlightDetails = new ValidateFlightDetails();
+        }
+
+        [TestCleanup]
+        public void Teardown()
+        {
+            validateFlightDetails = null;
+        }
+
         [TestMethod]
         public void ValidateAirlineCode_InputIsBlank_ReturnsFalse()
         {
             //Arrange
-            ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
-            string input = "";
+            string input = string.Empty;
             bool expected = false;
 
             //Act
@@ -25,9 +38,8 @@ namespace FlightReservation.BL.Test.Validations
         public void ValidateAirlineCode_InputIsLessThanTwoAndGreaterThanThree_ReturnsFalse()
         {
             //Arrange
-            ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
-            string testInput1 = "12";
-            string testInput2 = "1234";
+            string testInput1 = "P";
+            string testInput2 = "PRPR";
             bool expected1 = false;
             bool expected2 = false;
 
@@ -44,7 +56,6 @@ namespace FlightReservation.BL.Test.Validations
         public void ValidateAirlineCode_InputHasMultipleNumericCharacter_ReturnsFalse()
         {
             //Arrange
-            ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
             string input = "11P";
             bool expected = false;
 
@@ -55,26 +66,25 @@ namespace FlightReservation.BL.Test.Validations
             Assert.AreEqual(expected, actual);
         }
 
-        /*        [TestMethod]
-                public void ValidateAirlineCode_InputNumericValueIsNotInFirstCharacter_ReturnsFalse()
-                {
-                    //Arrange
-                    ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
-                    string input = "P1P";
-                    bool expected = false;
+        /*[TestMethod]
+        public void ValidateAirlineCode_InputNumericValueIsNotInFirstCharacter_ReturnsFalse()
+        {
+            //Arrange
+            ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
+            string input = "P1P";
+            bool expected = false;
 
-                    //Act
-                    bool actual = validateFlightDetails.ValidateAirlineCode(input);
+            //Act
+            bool actual = validateFlightDetails.ValidateAirlineCode(input);
 
-                    //Assert
-                    Assert.AreEqual(expected, actual);
-                }*/
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }*/
 
         [TestMethod]
         public void ValidateAirlineCode_NonAlphanumericInput_ReturnsFalse()
         {
             //Arrange
-            ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
             string input = "P@C";
             bool expected = false;
 
@@ -89,7 +99,6 @@ namespace FlightReservation.BL.Test.Validations
         public void ValidateAirlineCode_HappyPath_ReturnsTrue()
         {
             //Arrange
-            ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
             string input = "9999";
             bool expected = false;
 
@@ -106,7 +115,6 @@ namespace FlightReservation.BL.Test.Validations
         public void ValidateFlightNumber_NonNumericInput_ReturnsFalse()
         {
             //Arrange
-            ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
             string input = "P@C";
             bool expected = false;
 
@@ -121,7 +129,6 @@ namespace FlightReservation.BL.Test.Validations
         public void ValidateFlightNumber_NoInput_ReturnsFalse()
         {
             //Arrange
-            ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
             string input = "";
             bool expected = false;
 
@@ -136,7 +143,6 @@ namespace FlightReservation.BL.Test.Validations
         public void ValidateFlightNumber_InputGreaterThan9999_ReturnsFalse()
         {
             //Arrange
-            ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
             string input = "10000";
             bool expected = false;
 
@@ -151,7 +157,6 @@ namespace FlightReservation.BL.Test.Validations
         public void ValidateFlightNumber_InputLessThan1_ReturnsFalse()
         {
             //Arrange
-            ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
             string input = "0";
             bool expected = false;
 
@@ -166,7 +171,6 @@ namespace FlightReservation.BL.Test.Validations
         public void ValidateFlightNumber_HappyPath_ReturnsTrue()
         {
             //Arrange
-            ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
             string input1 = "1";
             string input2 = "9999";
             bool expected1 = true;
@@ -187,7 +191,6 @@ namespace FlightReservation.BL.Test.Validations
         public void ValidateStations_InputIsLessThanAndGreaterThanThree_ReturnsFalse()
         {
             //Arrange
-            ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
             string input1 = "AB";
             string input2 = "ABCD";
             bool expected1 = false;
@@ -206,8 +209,7 @@ namespace FlightReservation.BL.Test.Validations
         public void ValidateStations_InputIsBlank_ReturnsFalse()
         {
             //Arrange
-            ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
-            string input = "";
+            string input = string.Empty;
             bool expected = false;
 
             //Act
@@ -221,7 +223,6 @@ namespace FlightReservation.BL.Test.Validations
         public void ValidateStations_InputStartsWithNumericCharacter_ReturnsFalse()
         {
             //Arrange
-            ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
             string input = "1AB";
             bool expected = false;
 
@@ -236,7 +237,6 @@ namespace FlightReservation.BL.Test.Validations
         public void ValidateStations_HappyPath_ReturnsTrue()
         {
             //Arrange
-            ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
             string input = "A12";
             bool expected = true;
 
@@ -253,7 +253,6 @@ namespace FlightReservation.BL.Test.Validations
         public void ValidateScheduledTime_InputInvalidTime_ReturnsFalse()
         {
             //Arrange
-            ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
             string input = "13:69";
             bool expected = false;
 
@@ -268,7 +267,6 @@ namespace FlightReservation.BL.Test.Validations
         public void ValidateScheduledTime_HappyPath_ReturnsTrue()
         {
             //Arrange
-            ValidateFlightDetails validateFlightDetails = new ValidateFlightDetails();
             string input = "13:59";
             bool expected = true;
 

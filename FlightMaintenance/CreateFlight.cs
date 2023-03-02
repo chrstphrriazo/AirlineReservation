@@ -65,7 +65,7 @@ namespace FlightReservation.UI.FlightMaintenance
 
             if (!validateFlightDetails.ValidateTime(STA))
             {
-                Console.WriteLine("Invalid Time Input.");
+                Console.WriteLine("Invalid Time Input");
                 Console.ReadLine();
                 Console.Clear();
                 return;
@@ -76,13 +76,13 @@ namespace FlightReservation.UI.FlightMaintenance
 
             if (!validateFlightDetails.ValidateTime(STD))
             {
-                Console.WriteLine("Invalid Time Input.");
+                Console.WriteLine("Invalid Time Input");
                 Console.ReadLine();
                 Console.Clear();
                 return;
             }
 
-            string flightInformation = $"{airlineCode.ToUpper()}-{flightNumber}-{arrivalStation.ToUpper()}-{departureStation.ToUpper()}-{STA}-{STD}";
+            string flightInformation = $"{airlineCode.ToUpper()}-{flightNumber}-{departureStation}-{arrivalStation}-{STD}-{STA}";
 
             //Compare flightInformation to all flights
 
@@ -95,12 +95,11 @@ namespace FlightReservation.UI.FlightMaintenance
             }
             else
             {
-                Console.WriteLine("Flight Exist");
+                Console.WriteLine($"Flight {flightInformation} Exists!");
             }
 
-            Console.WriteLine(flightInformation);
-
             Console.ReadLine();
+            Console.Clear();
 
             return;
 
