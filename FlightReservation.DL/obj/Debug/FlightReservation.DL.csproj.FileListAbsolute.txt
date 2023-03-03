@@ -4,3 +4,6 @@ C:\Users\criazo\source\repos\FlightReservation\FlightReservation.DL\obj\Debug\Fl
 C:\Users\criazo\source\repos\FlightReservation\FlightReservation.DL\obj\Debug\FlightReservation.DL.csproj.CoreCompileInputs.cache
 C:\Users\criazo\source\repos\FlightReservation\FlightReservation.DL\obj\Debug\FlightReservation.DL.dll
 C:\Users\criazo\source\repos\FlightReservation\FlightReservation.DL\obj\Debug\FlightReservation.DL.pdb
+C:\Users\criazo\source\repos\FlightReservation\FlightReservation.DL\bin\Debug\RepositoryTextFile\Flights.txt
+C:\Users\criazo\source\repos\FlightReservation\FlightReservation.DL\bin\Debug\RepositoryTextFile\Passengers.txt
+C:\Users\criazo\source\repos\FlightReservation\FlightReservation.DL\bin\Debug\RepositoryTextFile\Reservations.txt

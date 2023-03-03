@@ -24,3 +24,6 @@ C:\Users\criazo\source\repos\FlightReservation\FlightReservation.BL.Test\obj\Deb
 C:\Users\criazo\source\repos\FlightReservation\FlightReservation.BL.Test\obj\Debug\FlightReservation.BL.Test.csproj.CopyComplete
 C:\Users\criazo\source\repos\FlightReservation\FlightReservation.BL.Test\obj\Debug\FlightReservation.BL.Test.dll
 C:\Users\criazo\source\repos\FlightReservation\FlightReservation.BL.Test\obj\Debug\FlightReservation.BL.Test.pdb
+C:\Users\criazo\source\repos\FlightReservation\FlightReservation.BL.Test\bin\Debug\RepositoryTextFile\Flights.txt
+C:\Users\criazo\source\repos\FlightReservation\FlightReservation.BL.Test\bin\Debug\RepositoryTextFile\Passengers.txt
+C:\Users\criazo\source\repos\FlightReservation\FlightReservation.BL.Test\bin\Debug\RepositoryTextFile\Reservations.txt
