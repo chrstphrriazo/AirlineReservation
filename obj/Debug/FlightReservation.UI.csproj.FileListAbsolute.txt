@@ -20,3 +20,6 @@ C:\Users\criazo\source\repos\FlightReservation\obj\Debug\FlightReservation.UI.cs
 C:\Users\criazo\source\repos\FlightReservation\obj\Debug\FlightReservation.UI.csproj.CopyComplete
 C:\Users\criazo\source\repos\FlightReservation\obj\Debug\FirstProject.exe
 C:\Users\criazo\source\repos\FlightReservation\obj\Debug\FirstProject.pdb
+C:\Users\criazo\source\repos\FlightReservation\bin\Debug\RepositoryTextFile\Flights.txt
+C:\Users\criazo\source\repos\FlightReservation\bin\Debug\RepositoryTextFile\Passengers.txt
+C:\Users\criazo\source\repos\FlightReservation\bin\Debug\RepositoryTextFile\Reservations.txt

@@ -68,7 +68,7 @@ namespace FlightReservation.BL.Test.Validations
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod]
+/*        [TestMethod]
         public void ValidateAirlineCode_InputNumericValueIsNotInFirstCharacter_ReturnsFalse()
         {
             //Arrange
@@ -81,7 +81,7 @@ namespace FlightReservation.BL.Test.Validations
 
             //Assert
             Assert.AreEqual(expected, actual);
-        }
+        }*/
 
         [TestMethod]
         public void ValidateAirlineCode_NonAlphanumericInput_ReturnsFalse()

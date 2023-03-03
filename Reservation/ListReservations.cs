@@ -15,9 +15,15 @@ namespace FirstProject.Reservation
         {
             ReservationsRepository reservationsRepository = new ReservationsRepository();
             ReservationQuery reservationQuery = new ReservationQuery(reservationsRepository);
+            ReservationMenu reservationMenu = new ReservationMenu();
             Console.WriteLine("LIST OF ALL RESERVATIONS\n");
 
             List<Reservations> allReservations =  reservationQuery.GetAllReservations();
+
+            if(allReservations.Count < 1)
+            {
+                Console.WriteLine("There Are No Reservations Available!\n");
+            }
 
             for(int i = 0; i < allReservations.Count; i++)
             {
@@ -27,7 +33,6 @@ namespace FirstProject.Reservation
             Console.Write("Press any key to exit...");
             Console.ReadLine();
             Console.Clear();
-            ReservationMenu reservationMenu = new ReservationMenu();
             reservationMenu.Reservation();
         }
     }

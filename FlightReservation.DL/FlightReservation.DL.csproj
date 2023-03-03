@@ -47,5 +47,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReservationsRepository.cs" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="RepositoryTextFile\Flights.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RepositoryTextFile\Passengers.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RepositoryTextFile\Reservations.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
